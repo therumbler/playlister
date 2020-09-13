@@ -1,7 +1,6 @@
 build:
-	cd playlister-vue && npm run build
 	docker build -t therumbler/playlister .
 	
 run:
 	docker stop playlister && docker rm playlister
-	docker run -p 8000:8000 --name playlister therumbler/playlister
+	docker run -p ${PORT}:${PORT} --name playlister --env-file=.env  therumbler/playlister
