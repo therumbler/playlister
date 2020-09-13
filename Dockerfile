@@ -1,3 +1,13 @@
+FROM node:14.10 as builder
+
+WORKDIR /build
+
+COPY ./playlister-vue/ /build
+RUN cd /build
+RUN ls
+RUN npm install
+RUN npm run build
+
 FROM python:3.8
 
 RUN mkdir /app
@@ -9,5 +19,6 @@ RUN pip install -r requirements.txt
 
 EXPOSE 8000
 COPY . /app/
-
+RUN mkdir /app/playlister-vue/dist
+COPY --from=builder /build/dist/ /app/playlister-vue/dist
 ENTRYPOINT ["./bin/docker-entrypoint.sh"]
