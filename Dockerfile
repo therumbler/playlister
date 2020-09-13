@@ -17,7 +17,7 @@ RUN pip install --upgrade pip
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-EXPOSE 8000
+EXPOSE $PORT
 COPY . /app/
 RUN mkdir /app/playlister-vue/dist
 COPY --from=builder /build/dist/ /app/playlister-vue/dist
