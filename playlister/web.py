@@ -7,14 +7,14 @@ from fastapi.staticfiles import StaticFiles
 from starlette.responses import HTMLResponse, RedirectResponse
 
 logger = logging.getLogger(__name__)
+
+
 def make_app():
     app = FastAPI()
     static_dir = Path(__file__).parent.parent
-    logger.info('static_dir = %s', static_dir)
+    logger.info("static_dir = %s", static_dir)
     static_dir = f"{static_dir}/playlister-vue/dist/"
-    app.mount(
-        "/static", StaticFiles(directory=static_dir), name="static"
-    )
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
     index_html = None
     with open("./playlister-vue/dist/index.html") as f:
         index_html = f.read()
@@ -23,8 +23,8 @@ def make_app():
     async def index():
         return HTMLResponse(index_html)
 
-    @app.get("/api")
+    @app.get("/api/search/{query}")
     async def api():
-        return {"hi":"there"}
-    
+        return {"hi": "there"}
+
     return app
