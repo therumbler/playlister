@@ -1,11 +1,11 @@
 FROM node:14.10 as builder
 
 WORKDIR /build
-
-COPY ./playlister-vue/ /build
+COPY ./playlister-vue/package*.json /build/
 RUN cd /build
 RUN ls
 RUN npm install
+COPY ./playlister-vue/ /build
 RUN npm run build
 
 FROM python:3.8
